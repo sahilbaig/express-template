@@ -1,16 +1,20 @@
-exports.getUser = (req, res) => {
-    res.json({ id: 1, name: "John Doe" });
+const pool = require('../config/db');
+
+module.exports.createUser = async (req, res) => {
+    try {
+        // Your logic for creating a user
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Database error" });
+    }
 };
 
-exports.createUser = (req, res) => {
-    res.json({ message: "User created", data: req.body });
-};
-
-// handlers/productHandler.js
-exports.getProduct = (req, res) => {
-    res.json({ id: 101, name: "Laptop", price: 1200 });
-};
-
-exports.createProduct = (req, res) => {
-    res.json({ message: "Product created", data: req.body });
+module.exports.getUser = async (req, res) => {
+    try {
+        const result = await pool.query('SELECT * FROM test');
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Database error" });
+    }
 };
